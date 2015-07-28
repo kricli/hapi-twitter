@@ -1,5 +1,6 @@
 //  Hapi is a class
 var Hapi = require('hapi');
+var Path = require('path');
 
 //  Instantiate
 var server = new Hapi.Server();
@@ -16,8 +17,17 @@ server.connection({
   }
 });
 
-//  Require MongoDB
+server.views({
+  engines: {
+    html: require('handlebars')
+  },
+  path: Path.join(__dirname, 'templates')
+});
+
+//  Any other dependencies
 var plugins = [
+  { register: require('./routes/users.js')},
+  { register: require('./routes/static-pages.js')},
   // Require MongoDB
   {
     register:require('hapi-mongodb'),
