@@ -1,0 +1,23 @@
+{
+  "name": "hapi-twitter",
+  "version": "0.0.1",
+  "description": "A WDI 8 Lesson to learn back-end using Hapi.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/kricli/hapi-twitter.git"
+  },
+  "author": "Richard Li",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kricli/hapi-twitter/issues"
+  },
+  "homepage": "https://github.com/kricli/hapi-twitter#readme",
+  "dependencies": {
+    "hapi": "^8.8.0",
+    "hapi-mongodb": "^3.0.0"
+  }
+}
