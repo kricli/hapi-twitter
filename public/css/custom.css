@@ -1,0 +1,44 @@
+body {
+   background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("../images/background.gif") no-repeat center center fixed;
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
+}
+
+#mainBody {
+  margin-top: 100px;
+}
+
+#leftIntro h1 {
+  font-family: "Arial Rounded MT Bold", Geneva, sans-serif;
+  font-size: 38px;
+  color: white
+}
+
+#leftIntro p {
+  color: white;
+  font-size: 25px;
+  margin-top: 20px
+}
+
+#rightBody {
+  background-color: white;
+  -khtml-opacity:.90;
+  -moz-opacity:.90;
+  -ms-filter:”alpha(opacity=90)”;
+  filter:alpha(opacity=90);
+  filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.90);
+  opacity:.90;
+  border-radius: 5px;
+  padding-bottom: 15px
+}
+
+#rightBody h4 {
+  color: grey;
+}
+#rightBody h4 span {
+  color: black;
+  font-size: 25px;
+  padding-bottom: 5px
+}

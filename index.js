@@ -1,4 +1,4 @@
-//  Hapi is a class
+//  Classes
 var Hapi = require('hapi');
 var Path = require('path');
 
