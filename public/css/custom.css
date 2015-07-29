@@ -22,7 +22,7 @@ body {
   margin-top: 20px
 }
 
-#rightBody {
+form {
   background-color: white;
   -khtml-opacity:.90;
   -moz-opacity:.90;
@@ -31,14 +31,20 @@ body {
   filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.90);
   opacity:.90;
   border-radius: 5px;
-  padding-bottom: 15px
+  padding: 1px 10px 10px 10px;
+  margin: 10px 0px 10px 0px
 }
 
-#rightBody h4 {
+form h4 {
   color: grey;
 }
-#rightBody h4 span {
+form h4 span {
   color: black;
   font-size: 25px;
   padding-bottom: 5px
+}
+
+.alert {
+  display: none;
+  margin: 5px 0px -5px 0px
 }

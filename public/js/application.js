@@ -3,29 +3,63 @@ $(document).ready(function(){
     this.userData = userData;
   };
 
+  var Signin = function(userData) {
+    this.userData = userData;
+  };
 
   Signup.prototype.signupPost = function(){
+    var successCallBack = function(reply){
+      $('.alert').hide();
+      if (reply.userExist) {
+        return $('#alertSignupExists').show();
+      }
+      if (reply.ok === 1) {
+        return $('#alertSignupSuccess').show();
+      }
+    };
+
+    var errorCallBack = function(error){
+      $('.alert').hide();
+      var x = error.responseJSON.validation.keys[0];
+      switch (x) {
+        case 'user.name':
+          return $('#alertSignupName').show();
+        case 'user.username':
+          return $('#alertSignupUsername').show();
+        case 'user.password':
+          return $('#alertSignupPassword').show();
+        case 'user.email':
+          return $('#alertSignupEmail').show();
+      }
+    };
     $.ajax({
       method:   'POST',
       data:     {user: this.userData},
       dataType: 'JSON',
       url:      'http://localhost:3000/users',
-      success:  function(response) {console.log(response);},
-      error:    function(xhr, status, data) {console.log(response);}
+      success:  successCallBack,
+      error:    errorCallBack
     });
   };
 
-  $('form').submit(function(e){
+  $('#signupForm').submit(function(e){
     e.preventDefault();
-    console.log('123');
-    var signup = new Signup({
-      name: $('#signupFullnameInput').val(),
-      username: $('#signupUsernameInput').val(),
-      password: $('#signupPasswordInput').val(),
-      email: $('#signupEmailInput').val()
-    });
-    console.log({user:signup.userData}.user);
+    var signup = new Signup(
+      { name: $('#signupFullnameInput').val(),
+        username: $('#signupUsernameInput').val(),
+        password: $('#signupPasswordInput').val(),
+        email: $('#signupEmailInput').val()
+      });
     signup.signupPost();
+  });
+
+  $('#signinForm').submit(function(e){
+    e.preventDefault();
+    var signin = new Signin(
+      { username: $('#signinUsernameInput').val(),
+        password: $('#signinPasswordInput').val()
+      });
+    signin.signinPost();
   });
 
 

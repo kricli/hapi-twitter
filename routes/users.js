@@ -8,13 +8,6 @@ exports.register = function(server, options, next) {
   server.route([
     {
       method: 'GET',
-      path: '/temp',
-      handler: function(request, reply){
-        reply('Hello World!');
-      }
-    },
-    {
-      method: 'GET',
       path: '/users',
       handler: function(request, reply){
         var db = request.server.plugins['hapi-mongodb'].db;
@@ -39,7 +32,7 @@ exports.register = function(server, options, next) {
           };
           db.collection('users').count(uniqueUserQuery, function(err, userExist){
             if (userExist) {
-            return reply("Error: Username already exists", err).code(200);
+            return reply({userExist: true});
             }
             //Encrypt my password
             Bcrypt.genSalt(10, function(err, salt){
@@ -58,10 +51,10 @@ exports.register = function(server, options, next) {
         validate: {
           payload: {
             user: {
-              email: Joi.string().email().max(50).required(),
-              password: Joi.string().min(5).max(20).required(),
+              name: Joi.string().min(3).max(20),
               username: Joi.string().min(3).max(20).required(),
-              name: Joi.string().min(3).max(20)
+              password: Joi.string().min(6).max(20).required(),
+              email: Joi.string().email().max(50).required()
             }
           }
         }
