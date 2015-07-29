@@ -10,7 +10,8 @@ $(document).ready(function(){
       data:     {user: this.userData},
       dataType: 'JSON',
       url:      'http://localhost:3000/users',
-      success:  function() {console.log('done');},
+      success:  function(response) {console.log(response);},
+      error:    function(xhr, status, data) {console.log(response);}
     });
   };
 
