@@ -2,9 +2,10 @@ $(document).ready(function(){
   var Signup = function(userData) {
     this.userData = userData;
   };
-
   var Signin = function(userData) {
     this.userData = userData;
+  };
+  var Signout = function() {
   };
 
   Signup.prototype.signupPost = function(){
@@ -42,6 +43,36 @@ $(document).ready(function(){
     });
   };
 
+  Signin.prototype.signinPost = function() {
+    var successCallBack = function(reply){
+      $('.alert').hide();
+      if (reply.authorized) {
+      $('#signinButton').hide();
+      $('#signoutButton').show();
+        return $('#alertSigninSuccess').show();
+      }
+      return $('#alertSigninIncorrect').show();
+    };
+    $.ajax({
+      method:   'POST',
+      data:     {user: this.userData},
+      dataType: 'JSON',
+      url:      'http://localhost:3000/sessions',
+      success:  successCallBack,
+    });
+  };
+
+  Signout.prototype.signoutDelete = function() {
+    var successCallBack = function(reply) {
+      console.log(reply);
+    };
+    $.ajax({
+      method:   'DELETE',
+      url:      'http://localhost:3000/sessions',
+      success:  successCallBack
+    });
+  };
+
   $('#signupForm').submit(function(e){
     e.preventDefault();
     var signup = new Signup(
@@ -62,5 +93,9 @@ $(document).ready(function(){
     signin.signinPost();
   });
 
-
+  $('#signoutButton').click(function(e){
+    e.preventDefault();
+    var signout = new Signout();
+    signout.signoutDelete();
+  });
 });

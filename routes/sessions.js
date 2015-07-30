@@ -1,4 +1,5 @@
 var Bcrypt = require('bcrypt');
+var Auth = require('./auth');
 
 exports.register = function(server, options, next){
 server.route([
@@ -29,14 +30,45 @@ server.route([
           };
           db.collection('sessions').insert(session, function(err, writeResult){
             if (err) { return reply('Internal MongoDB error');}
-            request.session.set('hapi_twittwe_session', session);
+            request.session.set('hapi_twitter_session', session);
             reply({ authorized: true});
           });
         });
       });
     }
+  },
+
+  {
+    method: 'DELETE',
+    path: '/sessions',
+    handler: function(request, reply) {
+      var session = request.session.get('hapi_twitter_session');
+      var db = request.server.plugins['hapi-mongodb'].db;
+
+      if (!session) {
+        return reply({ "message": "Already logged out" });
+      }
+
+      db.collection('sessions').remove({ "session_id": session.session_id }, function(err, writeResult) {
+        if (err) { return reply('Internal MongoDB error', err); }
+
+        reply(writeResult);
+      });
+    }
+  },
+  {
+    method: 'GET',
+    path: '/authenticated',
+    handler: function(request, reply){
+      var callbackFunction = function(result){
+        reply(result);
+      };
+      Auth.authenticated(request, callbackFunction);
+    }
   }
+
 ]);
+
 
 next();
 };
