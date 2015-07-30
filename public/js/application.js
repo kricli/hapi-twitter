@@ -1,21 +1,19 @@
 $(document).ready(function(){
-  var Signup = function(userData) {
+  var Submit = function(userData) {
     this.userData = userData;
   };
-  var Signin = function(userData) {
-    this.userData = userData;
-  };
-  var Signout = function() {
-  };
+  // var Signin = function(userData) {
+  //   this.userData = userData;
+  // };
 
-  Signup.prototype.signupPost = function(){
+  Submit.prototype.signupPost = function(){
     var successCallBack = function(reply){
       $('.alert').hide();
       if (reply.userExist) {
         return $('#alertSignupExists').show();
       }
       if (reply.ok === 1) {
-        return $('#alertSignupSuccess').show();
+        return this.signinPost();
       }
     };
 
@@ -34,6 +32,7 @@ $(document).ready(function(){
       }
     };
     $.ajax({
+      context: this,
       method:   'POST',
       data:     {user: this.userData},
       dataType: 'JSON',
@@ -43,13 +42,11 @@ $(document).ready(function(){
     });
   };
 
-  Signin.prototype.signinPost = function() {
+  Submit.prototype.signinPost = function() {
     var successCallBack = function(reply){
       $('.alert').hide();
       if (reply.authorized) {
-      $('#signinButton').hide();
-      $('#signoutButton').show();
-        return $('#alertSigninSuccess').show();
+        return window.location.reload();
       }
       return $('#alertSigninIncorrect').show();
     };
@@ -62,20 +59,11 @@ $(document).ready(function(){
     });
   };
 
-  Signout.prototype.signoutDelete = function() {
-    var successCallBack = function(reply) {
-      console.log(reply);
-    };
-    $.ajax({
-      method:   'DELETE',
-      url:      'http://localhost:3000/sessions',
-      success:  successCallBack
-    });
-  };
+
 
   $('#signupForm').submit(function(e){
     e.preventDefault();
-    var signup = new Signup(
+    var signup = new Submit(
       { name: $('#signupFullnameInput').val(),
         username: $('#signupUsernameInput').val(),
         password: $('#signupPasswordInput').val(),
@@ -86,16 +74,12 @@ $(document).ready(function(){
 
   $('#signinForm').submit(function(e){
     e.preventDefault();
-    var signin = new Signin(
+    var signin = new Submit(
       { username: $('#signinUsernameInput').val(),
         password: $('#signinPasswordInput').val()
       });
     signin.signinPost();
   });
 
-  $('#signoutButton').click(function(e){
-    e.preventDefault();
-    var signout = new Signout();
-    signout.signoutDelete();
-  });
+
 });
