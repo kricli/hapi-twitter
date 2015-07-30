@@ -10,7 +10,39 @@
     <link rel="stylesheet" href="../public/css/home.css">
   </head>
   <body>
-    <h1>Welcome back, <span id="name"></span></h1>
-    <button class="btn btn-default" id="signoutButton">Logout</button>
+    <container class="col-lg-10 col-lg-offset-1">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"><img src="../public/images/brandLogo.png"></a>
+          </div>
+          <div class="collapse navbar-collapse" id="navbarContent">
+            <div id="welcomeText"><p>Welcome, <span id="name"></span></p></div>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#" id="signoutButton">Signout</a></li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+      <div id="newTweets" class="col-lg-12">
+        <div class="form-horizontal">
+          <div class="form-group">
+              <div class="col-lg-12">
+                <textarea id="tweetMessage" class="form-control" rows="3" placeholder="What's up?" required></textarea>
+                <button class="btn btn-default" id="submitButton">Submit</button>
+              </div>
+          </div>
+      </div>
+      </div>
+      <div id="mainTweets" class="col-lg-12">
+      </div>
+    </container>
+
   </body>
 </html>
